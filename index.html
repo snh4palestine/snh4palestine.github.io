@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        header {
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+
+        header img {
+            max-width: 200px;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            height: 100px;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .generate-email-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        .generate-email-button:hover {
+            background-color: #45a049;
+        }
+
+        .mailto-link-button {
+            background-color: #007bff;
+            color: white;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .mailto-link-button:hover {
+            background-color: #0056b3;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .checkbox-column {
+            display: none;
+            text-align: left;
+        }
+
+        .checkbox-column label {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="logo.webp" alt="Logo">
+        </header>
+
+        <h1>Tell your Aldermen to support the ceasefire resolution!</h1>
+        <form id="emailForm">
+            <label for="name">Name:</label><br>
+            <input type="text" id="name" name="name" required><br>
+            <label for="address">Address:</label><br>
+            <input type="text" id="address" name="address" required><br>
+            <div class="button-container">
+                <button class="generate-email-button" id="generateEmailButton" type="button">Generate Message</button>
+            </div>
+            <textarea id="message" name="message" style="display: none;"></textarea><br>
+            <div class="checkbox-column" id="checkboxColumn">
+                <p>Which city officials would you like to send your message to?</p>
+                <label><input type="checkbox" name="recipient" value="mayor@manchesternh.gov" checked> Jay Ruais - Mayor</label>
+                <label><input type="checkbox" name="recipient" value="cmorgan@manchesternh.gov" checked> Chris Morgan - Alderman Ward 1</label>
+                <label><input type="checkbox" name="recipient" value="dan.goonan@manchesternh.gov" checked> Dan Goonan-  Alderman Ward 2</label>
+                <label><input type="checkbox" name="recipient" value="long55@comcast.net" checked> Pat Long - Alderman Ward 3</label>
+                <label><input type="checkbox" name="recipient" value="cfajardo@manchesternh.gov" checked> Christine Fajardo - Alderman Ward 4</label>
+                <label><input type="checkbox" name="recipient" value="asapienza@manchesternh.gov" checked> Tony Sapienza - Alderman Ward 5</label>
+                <label><input type="checkbox" name="recipient" value="ckantor@manchesternh.gov" checked> Crissy Kantor - Alderman Ward 6</label>
+                <label><input type="checkbox" name="recipient" value="rterrio@manchesternh.gov" checked> Ross Terrio - Alderman Ward 7</label>
+                <label><input type="checkbox" name="recipient" value="esapienza@manchesternh.gov" checked> EdAlderman Ward Sapienza - Alderman Ward 8</label>
+                <label><input type="checkbox" name="recipient" value="jburkush@manchesternh.gov" checked> Jim Burkush - Alderman Ward 9</label>
+                <label><input type="checkbox" name="recipient" value="bbarry@manchesternh.gov" checked> Bill Barry - Alderman Ward 10</label>
+                <label><input type="checkbox" name="recipient" value="nvincent@manchesternh.gov" checked> Norm Vincent - Alderman Ward 11</label>
+                <label><input type="checkbox" name="recipient" value="kelly.thomas@manchesternh.gov" checked> Kelly Thomas - Alderman Ward 12</label>
+                <label><input type="checkbox" name="recipient" value="jklevasseur@manchesternh.gov" checked> Joe Kelly Levasseur - Alderman At-Large</label>
+                <label><input type="checkbox" name="recipient" value="doneil@manchesternh.gov" checked> Dan O'Neil - Alderman At-Large</label>
+            </div>
+            <div class="button-container" id="generateLinkButtonContainer" style="display: none;">
+                <button class="mailto-link-button" id="generateLinkButton" type="button">Generate Email</button>
+            </div>
+            <div class="button-container" id="updateLinkButtonContainer" style="display: none;">
+                <button class="mailto-link-button" id="updateLinkButton" type="button">Update Email Link</button>
+            </div>
+        </form>
+    </div>
+
+    <footer>
+        <a href="https://www.instagram.com/southern_nh4palestine/">@southern_nh4palestine</a>
+    </footer>
+
+    <script>
+        document.getElementById('generateEmailButton').addEventListener('click', function() {
+            var name = document.getElementById('name').value;
+            var address = document.getElementById('address').value;
+            var message = document.getElementById('message');
+            var defaultMsg = "Dear Manchester Board of Mayor and Aldermen,\n\nMy name is " + name + ", and my address is " + address + ".\n\nI am writing to you today to let you know that I believe that the City of Manchester should join with over 70 other cities and towns across the U.S. and pass a resolution calling for an immediate ceasefire in Gaza, the provision of humanitarian aid, and an end to all U.S. military aid to Israel. I urge you to support the ceasefire resolution that has already been proposed at multiple meetings of the Board of Mayor and Aldermen.\n\nFor Manchester to stay silent in the face of an ongoing genocide funded by its residents' tax dollars is an embarrassment that will forever tarnish the reputation of this city. Please do your duty as an elected official and vote to pass the ceasefire resolution.\n\nSincerely,\n\n" + name;
+            message.value = defaultMsg;
+            message.style.display = 'block';
+            document.getElementById('checkboxColumn').style.display = 'block';
+            document.getElementById('generateLinkButtonContainer').style.display = 'block';
+        });
+
+        document.getElementById('generateLinkButton').addEventListener('click', function() {
+            updateMailtoLink();
+            document.getElementById('updateLinkButtonContainer').style.display = 'block';
+        });
+
+        document.getElementById('updateLinkButton').addEventListener('click', function() {
+            updateMailtoLink();
+        });
+
+        function updateMailtoLink() {
+            var name = document.getElementById('name').value;
+            var address = document.getElementById('address').value;
+            var message = document.getElementById('message').value;
+
+            var subject = encodeURIComponent("New Contact Information");
+            var body = encodeURIComponent(message);
+
+            var recipients = document.querySelectorAll('input[name="recipient"]:checked');
+            var recipientEmails = [];
+            recipients.forEach(function(checkbox) {
+                recipientEmails.push(checkbox.value);
+            });
+            var recipientString = recipientEmails.join(',');
+
+            var mailtoLink = "mailto:" + recipientString + "?subject=" + subject + "&body=" + body;
+
+            var mailtoParagraph = document.createElement('p');
+            mailtoParagraph.innerHTML = 'Click <a href="' + mailtoLink + '">here</a> to send email.';
+            document.getElementById('generateLinkButtonContainer').innerHTML = '';
+            document.getElementById('generateLinkButtonContainer').appendChild(mailtoParagraph);
+        }
+    </script>
+</body>
+</html>
